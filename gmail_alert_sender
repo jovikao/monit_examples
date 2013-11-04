@@ -1,0 +1,21 @@
+set daemon 20 # check services at 20 seconds intervals
+set httpd port 4321
+allow yourusername:password
+
+set alert alert.to@gmail.com
+set mailserver smtp.gmail.com port 587
+username "alert.sender@gmail.com" password "gmail_password"
+using tlsv1
+with timeout 60 seconds
+set mail-format {
+     from: alert.sender@gmail.com
+  subject: monit alert --  host:$HOST event:$EVENT service:$SERVICE
+  message: $EVENT Service $SERVICE
+                Date:        $DATE
+                Action:      $ACTION
+                Host:        $HOST
+                Description: $DESCRIPTION
+
+           Your faithful employee,
+           Monit
+}
